@@ -1,7 +1,7 @@
 import '../App.css';
 import Main from './Main.tsx';
 import Header from './Header.tsx';
-import { useEffect, useReducer } from 'react';
+import { useReducer } from 'react';
 import Loader from '../Loader.tsx';
 import ErrorMessage from '../ErrorMessage.tsx';
 import StartScreen from './StartScreen.tsx';
@@ -12,10 +12,11 @@ import Progress from './Progress.tsx';
 import FinishQuiz from './FinishQuiz.tsx';
 import Footer from './Footer.tsx';
 import Timer from './Timer.tsx';
+import questions from '../data/questions.ts';
 
 const initialState: State = {
-  questions: [],
-  status: 'loading',
+  questions: questions,
+  status: 'ready',
   index: 0,
   answer: null,
   points: 0,
@@ -83,12 +84,12 @@ function App() {
   const numQuestions = questions.length;
   const maxPoints = questions.reduce((prev, curr) => prev + curr.points, 0);
 
-  useEffect(() => {
-    fetch('http://localhost:8000/questions')
-      .then(response => response.json())
-      .then(data => dispatch({ type: 'dataReceived', payload: data }))
-      .catch(() => dispatch({ type: 'dataFailed' }));
-  }, []);
+  // useEffect(() => {
+  //   fetch('http://localhost:8000/questions')
+  //     .then(response => response.json())
+  //     .then(data => dispatch({ type: 'dataReceived', payload: data }))
+  //     .catch(() => dispatch({ type: 'dataFailed' }));
+  // }, []);
   return (
     <div className='app'>
       <Header />
